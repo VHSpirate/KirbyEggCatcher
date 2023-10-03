@@ -1,0 +1,151 @@
+[gd_scene load_steps=15 format=3 uid="uid://4r2r7ugj3nav"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_3wt3s"]
+[ext_resource type="Texture2D" uid="uid://b0ssgcrt34lw8" path="res://Sprites/background_sheet.png" id="1_144op"]
+[ext_resource type="Shader" path="res://maskshader.gdshader" id="2_e1veg"]
+[ext_resource type="PackedScene" uid="uid://gyjxe1jjyqqv" path="res://Kirby.tscn" id="3_kjpas"]
+[ext_resource type="Texture2D" uid="uid://xfg5xpi5otoi" path="res://Sprites/background-mask.png" id="3_n84vp"]
+[ext_resource type="PackedScene" uid="uid://csuhueosqi4rt" path="res://king.tscn" id="4_7y1lr"]
+[ext_resource type="AudioStream" uid="uid://cxmbjaho5fl7y" path="res://Sounds/SFX/2A confirmation.wav" id="7_6r8od"]
+[ext_resource type="AudioStream" uid="uid://cxnqf47ians2m" path="res://Sounds/Music/10 Level Map Select of LEVEL 2 LOOP.mp3" id="8_73q2c"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ywlus"]
+shader = ExtResource("2_e1veg")
+shader_parameter/blend_color1 = Color(0.466667, 0, 0.847059, 1)
+shader_parameter/blend_color2 = Color(0.466667, 0, 0.847059, 1)
+shader_parameter/mask_texture = ExtResource("3_n84vp")
+
+[sub_resource type="Animation" id="Animation_n1oa3"]
+resource_name = "Intro"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_25sji"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Background:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8igda"]
+resource_name = "fadein"
+length = 3.0
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Background:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.77, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.792157, 0.290196, 0.517647, 1), Color(0, 0, 0, 1), Color(0.792157, 0.290196, 0.517647, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dgsdr"]
+_data = {
+"Intro": SubResource("Animation_n1oa3"),
+"RESET": SubResource("Animation_25sji"),
+"fadein": SubResource("Animation_8igda")
+}
+
+[sub_resource type="Curve2D" id="Curve2D_udab7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -64.3122, -66.0142, 0, 0, 0, 0, -63.4353, -22.1714, 0, 0, 0, 0, -63.184, 41.2589, -14.9907, 21.3141, 14.9907, -21.3141, -63.184, 37.133, 0, 0, 0, 0, -44.0031, 40.2274)
+}
+point_count = 5
+
+[node name="Main" type="Node2D"]
+position = Vector2(128, 120)
+script = ExtResource("1_3wt3s")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_ywlus")
+texture = ExtResource("1_144op")
+hframes = 3
+vframes = 2
+region_enabled = true
+region_rect = Rect2(0, 0, 768, 480)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dgsdr")
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(10.395, 0)
+scale = Vector2(0.886301, 0.969488)
+curve = SubResource("Curve2D_udab7")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(-64.3122, -66.0142)
+rotates = false
+loop = false
+
+[node name="Kirby" parent="Path2D/PathFollow2D" instance=ExtResource("3_kjpas")]
+scale = Vector2(1.12828, 1.03147)
+
+[node name="King" parent="." instance=ExtResource("4_7y1lr")]
+visible = false
+
+[node name="SFXPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_6r8od")
+bus = &"SFX"
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_73q2c")
+autoplay = true
+bus = &"Music"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="bounced" from="Path2D/PathFollow2D/Kirby" to="." method="_on_kirby_bounced"]

@@ -1,0 +1,111 @@
+[gd_scene load_steps=9 format=3 uid="uid://csuhueosqi4rt"]
+
+[ext_resource type="Shader" path="res://gradient_time.gdshader" id="1_1truy"]
+[ext_resource type="Gradient" uid="uid://c7a28n7uwkyiy" path="res://blue_gradient.tres" id="2_xmo4o"]
+[ext_resource type="Texture2D" uid="uid://bihmp0khk2wno" path="res://Sprites/KingDedede.png" id="3_bod83"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mdrgx"]
+gradient = ExtResource("2_xmo4o")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6uo8x"]
+shader = ExtResource("1_1truy")
+shader_parameter/mix_amount = 0.0
+shader_parameter/gradient = SubResource("GradientTexture2D_mdrgx")
+
+[sub_resource type="Animation" id="Animation_1oiyn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/mix_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -1)]
+}
+
+[sub_resource type="Animation" id="Animation_hl4x6"]
+resource_name = "Spotlight"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/mix_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0001, 0.2, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.3, 4.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2, 2.2, 2.4, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 6, 7, 8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.3, 2.4, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d188o"]
+_data = {
+"RESET": SubResource("Animation_1oiyn"),
+"Spotlight": SubResource("Animation_hl4x6")
+}
+
+[node name="King" type="Sprite2D"]
+material = SubResource("ShaderMaterial_6uo8x")
+position = Vector2(0, -1)
+texture = ExtResource("3_bod83")
+hframes = 6
+vframes = 2
+frame = 1
+
+[node name="Shader animator" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_d188o")
+}
