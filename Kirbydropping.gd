@@ -33,7 +33,7 @@ func check_bounce():	if(bounce && path_follow_2d.get_progress()>=115):
 		bounce=false
 		var instance = star.instantiate()
 		add_child(instance)
-		emit_signal("bounced")
+		bounced.emit()
 
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://4r2r7ugj3nav"]
+[gd_scene load_steps=15 format=3 uid="uid://4r2r7ugj3nav"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_3wt3s"]
 [ext_resource type="Texture2D" uid="uid://b0ssgcrt34lw8" path="res://Sprites/background_sheet.png" id="1_144op"]
@@ -13,18 +13,11 @@
 shader = ExtResource("2_e1veg")
 shader_parameter/blend_color1 = Color(0.466667, 0, 0.847059, 1)
 shader_parameter/blend_color2 = Color(0.466667, 0, 0.847059, 1)
-shader_parameter/active = false
 shader_parameter/mask_texture = ExtResource("3_n84vp")
-
-[sub_resource type="Curve2D" id="Curve2D_udab7"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, -64.3122, -66.0142, 0, 0, 0, 0, -63.4353, -22.1714, 0, 0, 0, 0, -63.184, 41.2589, -14.9907, 21.3141, 14.9907, -21.3141, -63.184, 37.133, 0, 0, 0, 0, -44.0031, 40.2274)
-}
-point_count = 5
 
 [sub_resource type="Animation" id="Animation_n1oa3"]
 resource_name = "Intro"
-length = 3.0
+length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -32,7 +25,7 @@ tracks/0/path = NodePath("Background:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 3),
+"times": PackedFloat32Array(0, 4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [2, 3]
@@ -64,22 +57,10 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Background:material:shader_parameter/active")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_8igda"]
 resource_name = "fadein"
-length = 1.1
+length = 3.0
 step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -106,101 +87,23 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1), Color(0.792157, 0.290196, 0.517647, 1), Color(0, 0, 0, 1), Color(0.792157, 0.290196, 0.517647, 1), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_foux5"]
-resource_name = "starting_menu"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Background:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Background:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_1vdqa"]
-resource_name = "start_gameplay"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Background:material:shader_parameter/active")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dgsdr"]
 _data = {
 "Intro": SubResource("Animation_n1oa3"),
 "RESET": SubResource("Animation_25sji"),
-"fadein": SubResource("Animation_8igda"),
-"start_gameplay": SubResource("Animation_1vdqa"),
-"starting_menu": SubResource("Animation_foux5")
+"fadein": SubResource("Animation_8igda")
 }
 
-[sub_resource type="Animation" id="Animation_63r5i"]
-resource_name = "start_gp"
-length = 3.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Background:material:shader_parameter/active")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(3, 3.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_mrwfk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Background:material:shader_parameter/active")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_awtk0"]
+[sub_resource type="Curve2D" id="Curve2D_udab7"]
 _data = {
-"RESET": SubResource("Animation_mrwfk"),
-"start_gp": SubResource("Animation_63r5i")
+"points": PackedVector2Array(0, 0, 0, 0, -64.3122, -66.0142, 0, 0, 0, 0, -63.4353, -22.1714, 0, 0, 0, 0, -63.184, 41.2589, -14.9907, 21.3141, 14.9907, -21.3141, -63.184, 37.133, 0, 0, 0, 0, -44.0031, 40.2274)
 }
+point_count = 5
 
 [node name="Main" type="Node2D"]
 position = Vector2(128, 120)
 script = ExtResource("1_3wt3s")
 kirby_scene = ExtResource("2_o802s")
-king_dedede = ExtResource("4_7y1lr")
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -210,6 +113,11 @@ hframes = 3
 vframes = 2
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 480)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dgsdr")
+}
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
@@ -225,6 +133,9 @@ position = Vector2(-64.3122, -66.0142)
 rotates = false
 loop = false
 
+[node name="King" parent="." instance=ExtResource("4_7y1lr")]
+visible = false
+
 [node name="SFXPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_6r8od")
 bus = &"SFX"
@@ -233,15 +144,5 @@ bus = &"SFX"
 stream = ExtResource("8_73q2c")
 autoplay = true
 bus = &"Music"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_dgsdr")
-}
-
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_awtk0")
-}
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://gyjxe1jjyqqv"]
 
-[ext_resource type="Texture2D" uid="uid://d1368n2lrmrod" path="res://Sprites/Kirby_sheet.png" id="1_3ut2s"]
-[ext_resource type="Script" path="res://Kirbydropping.gd" id="2_momb2"]
+[ext_resource type="Texture2D" uid="uid://d1368n2lrmrod" path="res://Sprites/Kirby_sheet.png" id="1_qrsxa"]
+[ext_resource type="Script" path="res://Kirbydropping.gd" id="2_8g67s"]
 
 [sub_resource type="Animation" id="Animation_mrpml"]
 length = 0.001
@@ -75,10 +75,10 @@ _data = {
 }
 
 [node name="Kirby" type="Sprite2D"]
-texture = ExtResource("1_3ut2s")
+texture = ExtResource("1_qrsxa")
 hframes = 12
 frame = 9
-script = ExtResource("2_momb2")
+script = ExtResource("2_8g67s")
 
 [node name="KirbyIntroAnimator" type="AnimationPlayer" parent="."]
 libraries = {

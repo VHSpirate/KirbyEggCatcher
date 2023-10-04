@@ -3,7 +3,7 @@ shader_type canvas_item;
 uniform sampler2D mask_texture : hint_default_black;
 uniform vec3 blend_color1 : source_color; // Color for the first blend mode (Hue)
 uniform vec3 blend_color2 : source_color; // Color for the second blend mode (Subtract)
-
+uniform bool active;
 
 vec3 subtract(vec3 base, vec3 blend) {
     return max(base - blend, 0.0);
@@ -63,6 +63,9 @@ vec3 hueBlend(vec3 base, vec3 blend) {
 
 
 void fragment() {
+	if (active==true){
+		
+	
     // Sample the mask texture
     vec4 mask = texture(mask_texture, SCREEN_UV);
 
@@ -74,6 +77,7 @@ void fragment() {
 
     // Blend based on the mask's red channel
     COLOR.rgb = mix(COLOR.rgb, after_hue_blend, mask.r);
+	}
 }
 
 

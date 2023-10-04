@@ -2,6 +2,7 @@ shader_type canvas_item;
 
 uniform sampler2D gradient:hint_default_black;
 uniform float mix_amount = 1.0;
+
 vec4 multiply(vec4 base, vec4 blend){
 	return base * blend;
 }
