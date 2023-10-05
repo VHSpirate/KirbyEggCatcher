@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://4r2r7ugj3nav"]
+[gd_scene load_steps=25 format=3 uid="uid://4r2r7ugj3nav"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_3wt3s"]
 [ext_resource type="Texture2D" uid="uid://b0ssgcrt34lw8" path="res://Sprites/background_sheet.png" id="1_144op"]
@@ -6,8 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://gyjxe1jjyqqv" path="res://kirby.tscn" id="2_o802s"]
 [ext_resource type="Texture2D" uid="uid://xfg5xpi5otoi" path="res://Sprites/background-mask.png" id="3_n84vp"]
 [ext_resource type="PackedScene" uid="uid://csuhueosqi4rt" path="res://king.tscn" id="4_7y1lr"]
+[ext_resource type="PackedScene" uid="uid://b4xo53umoj178" path="res://egg_ui.tscn" id="4_o7pbd"]
 [ext_resource type="AudioStream" uid="uid://cxmbjaho5fl7y" path="res://Sounds/SFX/2A confirmation.wav" id="7_6r8od"]
 [ext_resource type="AudioStream" uid="uid://cxnqf47ians2m" path="res://Sounds/Music/10 Level Map Select of LEVEL 2 LOOP.mp3" id="8_73q2c"]
+[ext_resource type="Script" path="res://Area2D.gd" id="9_5p8i8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ywlus"]
 shader = ExtResource("2_e1veg")
@@ -196,11 +198,22 @@ _data = {
 "start_gp": SubResource("Animation_63r5i")
 }
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_bq5aj"]
+a = Vector2(-3, 0)
+b = Vector2(148, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_cxq61"]
+a = Vector2(-19, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mp15o"]
+size = Vector2(256, 240)
+
 [node name="Main" type="Node2D"]
 position = Vector2(128, 120)
 script = ExtResource("1_3wt3s")
 kirby_scene = ExtResource("2_o802s")
 king_dedede = ExtResource("4_7y1lr")
+egg_ui = ExtResource("4_o7pbd")
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -210,14 +223,14 @@ hframes = 3
 vframes = 2
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 480)
+metadata/_edit_lock_ = true
 
-[node name="Timer" type="Timer" parent="."]
+[node name="PlayerSpawnTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
 
 [node name="Path2D" type="Path2D" parent="."]
-position = Vector2(10.395, 0)
-scale = Vector2(0.886301, 0.969488)
+position = Vector2(15, -5)
 curve = SubResource("Curve2D_udab7")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
@@ -244,4 +257,43 @@ libraries = {
 "": SubResource("AnimationLibrary_awtk0")
 }
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="Node2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D"]
+position = Vector2(-73, 45)
+shape = SubResource("SegmentShape2D_bq5aj")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node2D"]
+position = Vector2(-19.26, 24.01)
+shape = SubResource("SegmentShape2D_cxq61")
+debug_color = Color(0.92549, 0, 0.670588, 0.419608)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 65
+script = ExtResource("9_5p8i8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_mp15o")
+
+[node name="GamePlayTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="egg_basket" type="GridContainer" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(24, 120)
+layout_direction = 2
+offset_left = -88.0
+offset_top = 47.0
+offset_right = -64.0
+offset_bottom = 167.0
+rotation = 3.14159
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 3
+metadata/_edit_use_anchors_ = true
+
+[connection signal="timeout" from="PlayerSpawnTimer" to="." method="_on_timer_timeout"]
+[connection signal="body_exited" from="Area2D" to="Area2D" method="_on_body_exited"]

@@ -1,22 +1,26 @@
 extends Node2D
 @onready var animation_player = $AnimationPlayer
-@onready var start_timer = $Timer
+@onready var start_timer = $PlayerSpawnTimer
 @onready var background_music = $BackgroundMusic
 @onready var sfx_player = $SFXPlayer
 @onready var path_follow_2d = $Path2D/PathFollow2D
 @onready var animation_player_2 = $AnimationPlayer2
+@onready var game_play_timer = $GamePlayTimer
+@onready var egg_basket = $egg_basket
+
+
 var battle_music = load("res://Sounds/Music/19 Expert Bonus Level.mp3")
 var start_music = load("res://Sounds/Music/10 Level Map Select of LEVEL 2 LOOP.mp3")
 var start_game:bool = false;
 @export var kirby_scene:PackedScene
 @export var king_dedede:PackedScene
+@export var egg_ui:PackedScene
 var kirby
 var kirby_spawn_location
 var king
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_released("restart") and start_game:
@@ -32,6 +36,7 @@ func _process(delta):
 func start():
 	start_game	= true
 	start_timer.start()
+	game_play_timer.start()
 	animation_player.play("fadein")
 
 
@@ -44,7 +49,8 @@ func  spawn_player():
 	path_follow_2d.add_child(kirby)
 	#var kirby_node = get_node()
 	kirby.connect("bounced",_on_kirby_bounced)
-	
+	kirby.connect("egg_eated",_add_egg_ui)
+	game_play_timer.connect("timeout",kirby._on_game_play_timer)
 	background_music.stream=battle_music
 	background_music.play()
 	
@@ -61,6 +67,8 @@ func restart():
 	animation_player.play("starting_menu")
 	kirby.queue_free()
 	king.queue_free()
+	for child in egg_basket.get_children():
+		child.queue_free()
 	background_music.stop()
 	background_music.stream=start_music
 	background_music.play()
@@ -69,4 +77,7 @@ func spawn_king():
 	king = king_dedede.instantiate()
 	add_child(king)
 	animation_player_2.play("start_gp")
-
+	
+func _add_egg_ui():
+	var egg = egg_ui.instantiate()
+	egg_basket.add_child(egg)

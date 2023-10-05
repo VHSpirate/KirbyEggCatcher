@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxrfrb8afsihs"]
+
+[ext_resource type="Script" path="res://RigidBody2D.gd" id="1_8klw7"]
+[ext_resource type="Texture2D" uid="uid://vlcwa08k88lr" path="res://Sprites/misc1.png" id="2_nvhv5"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_02sjv"]
+radius = 5.0
+height = 14.0
+
+[sub_resource type="Animation" id="Animation_ya82d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_glcql"]
+resource_name = "rolling"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k5246"]
+_data = {
+"RESET": SubResource("Animation_ya82d"),
+"rolling": SubResource("Animation_glcql")
+}
+
+[node name="RigidBody2D" type="RigidBody2D"]
+scale = Vector2(1.00202, 0.99293)
+script = ExtResource("1_8klw7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_02sjv")
+
+[node name="Egg" type="Sprite2D" parent="."]
+texture = ExtResource("2_nvhv5")
+hframes = 3
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Egg"]
+libraries = {
+"": SubResource("AnimationLibrary_k5246")
+}

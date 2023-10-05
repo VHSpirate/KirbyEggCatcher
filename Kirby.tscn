@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://gyjxe1jjyqqv"]
+[gd_scene load_steps=13 format=3 uid="uid://gyjxe1jjyqqv"]
 
 [ext_resource type="Texture2D" uid="uid://d1368n2lrmrod" path="res://Sprites/Kirby_sheet.png" id="1_qrsxa"]
-[ext_resource type="Script" path="res://Kirbydropping.gd" id="2_8g67s"]
+[ext_resource type="Script" path="res://Kirby.gd" id="2_fex1d"]
 
 [sub_resource type="Animation" id="Animation_mrpml"]
 length = 0.001
@@ -16,6 +16,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_hfvmt"]
@@ -66,21 +78,114 @@ tracks/0/keys = {
 "values": [5, 6, 9]
 }
 
+[sub_resource type="Animation" id="Animation_scfls"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+
+[sub_resource type="Animation" id="Animation_ojotu"]
+resource_name = "head_bounce"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [8, 7]
+}
+
+[sub_resource type="Animation" id="Animation_o8i7m"]
+resource_name = "ready_eat"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+
+[sub_resource type="Animation" id="Animation_7c5dh"]
+resource_name = "gulp"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [10, 11, 10]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-1, 0), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b5yrr"]
 _data = {
 "RESET": SubResource("Animation_mrpml"),
 "bounce": SubResource("Animation_hfvmt"),
 "falling": SubResource("Animation_1vytj"),
-"get_up": SubResource("Animation_lf1hq")
+"get_up": SubResource("Animation_lf1hq"),
+"gulp": SubResource("Animation_7c5dh"),
+"head_bounce": SubResource("Animation_ojotu"),
+"idle": SubResource("Animation_scfls"),
+"ready_eat": SubResource("Animation_o8i7m")
 }
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8r08v"]
+radius = 7.0
+height = 22.0
 
 [node name="Kirby" type="Sprite2D"]
 texture = ExtResource("1_qrsxa")
 hframes = 12
 frame = 9
-script = ExtResource("2_8g67s")
+script = ExtResource("2_fex1d")
 
 [node name="KirbyIntroAnimator" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_b5yrr")
 }
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 65
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, 3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_8r08v")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

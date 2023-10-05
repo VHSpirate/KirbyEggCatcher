@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7cviv3l04ly2"
-path="res://.godot/imported/MASKTEST.png-936d3b3b8519e637699214ca63a611e8.ctex"
+uid="uid://f6mpbfgnge8s"
+path="res://.godot/imported/UI_EGG.png-d7c82a22159fcf08ec584fa3ecf6e2f0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MASKTEST.png"
-dest_files=["res://.godot/imported/MASKTEST.png-936d3b3b8519e637699214ca63a611e8.ctex"]
+source_file="res://UI_EGG.png"
+dest_files=["res://.godot/imported/UI_EGG.png-d7c82a22159fcf08ec584fa3ecf6e2f0.ctex"]
 
 [params]
 

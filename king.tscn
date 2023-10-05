@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://csuhueosqi4rt"]
+[gd_scene load_steps=12 format=3 uid="uid://csuhueosqi4rt"]
 
 [ext_resource type="Shader" path="res://gradient_time.gdshader" id="1_1truy"]
 [ext_resource type="Gradient" uid="uid://c7a28n7uwkyiy" path="res://blue_gradient.tres" id="2_xmo4o"]
 [ext_resource type="Texture2D" uid="uid://bihmp0khk2wno" path="res://Sprites/KingDedede.png" id="3_bod83"]
 [ext_resource type="Script" path="res://king.gd" id="4_6liup"]
+[ext_resource type="PackedScene" uid="uid://cxrfrb8afsihs" path="res://egg.tscn" id="5_rhvt4"]
+[ext_resource type="PackedScene" uid="uid://dtbp50apypidf" path="res://bomb.tscn" id="6_wrwdo"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_mdrgx"]
 gradient = ExtResource("2_xmo4o")
@@ -99,14 +101,15 @@ _data = {
 }
 
 [node name="King" type="Sprite2D"]
+z_index = 1
 material = SubResource("ShaderMaterial_6uo8x")
-position = Vector2(0, -1)
-scale = Vector2(0.997984, 1.00712)
 texture = ExtResource("3_bod83")
 hframes = 6
 vframes = 2
 frame = 1
 script = ExtResource("4_6liup")
+egg = ExtResource("5_rhvt4")
+bomb = ExtResource("6_wrwdo")
 
 [node name="Shader animator" type="AnimationPlayer" parent="."]
 libraries = {
