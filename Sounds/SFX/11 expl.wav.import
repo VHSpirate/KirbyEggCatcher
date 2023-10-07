@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://gdhi1ep0efc5"
+path="res://.godot/imported/11 expl.wav-bc4dcc34ede455613b83731f69ee0ba3.sample"
+
+[deps]
+
+source_file="res://Sounds/SFX/11 expl.wav"
+dest_files=["res://.godot/imported/11 expl.wav-bc4dcc34ede455613b83731f69ee0ba3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

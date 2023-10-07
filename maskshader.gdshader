@@ -3,7 +3,7 @@ shader_type canvas_item;
 uniform sampler2D mask_texture : hint_default_black;
 uniform vec3 blend_color1 : source_color; // Color for the first blend mode (Hue)
 uniform vec3 blend_color2 : source_color; // Color for the second blend mode (Subtract)
-uniform bool active;
+uniform bool active; //7700d8
 
 vec3 subtract(vec3 base, vec3 blend) {
     return max(base - blend, 0.0);
@@ -59,8 +59,6 @@ vec3 hueBlend(vec3 base, vec3 blend) {
     vec3 blendHSL = rgb2hsl(blend);
     return hsl2rgb(vec3(blendHSL.r, baseHSL.g, baseHSL.b));
 }
-
-
 
 void fragment() {
 	if (active==true){

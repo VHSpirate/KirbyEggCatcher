@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://4r2r7ugj3nav"]
+[gd_scene load_steps=34 format=3 uid="uid://4r2r7ugj3nav"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_3wt3s"]
 [ext_resource type="Texture2D" uid="uid://b0ssgcrt34lw8" path="res://Sprites/background_sheet.png" id="1_144op"]
@@ -7,14 +7,18 @@
 [ext_resource type="Texture2D" uid="uid://xfg5xpi5otoi" path="res://Sprites/background-mask.png" id="3_n84vp"]
 [ext_resource type="PackedScene" uid="uid://csuhueosqi4rt" path="res://king.tscn" id="4_7y1lr"]
 [ext_resource type="PackedScene" uid="uid://b4xo53umoj178" path="res://egg_ui.tscn" id="4_o7pbd"]
+[ext_resource type="PackedScene" uid="uid://41pxfsuq8is1" path="res://scoreboard.tscn" id="5_x8c8q"]
 [ext_resource type="AudioStream" uid="uid://cxmbjaho5fl7y" path="res://Sounds/SFX/2A confirmation.wav" id="7_6r8od"]
 [ext_resource type="AudioStream" uid="uid://cxnqf47ians2m" path="res://Sounds/Music/10 Level Map Select of LEVEL 2 LOOP.mp3" id="8_73q2c"]
 [ext_resource type="Script" path="res://Area2D.gd" id="9_5p8i8"]
+[ext_resource type="Shader" path="res://explosion.gdshader" id="12_xpd0h"]
+[ext_resource type="AudioStream" uid="uid://didjchyp2m76y" path="res://Sounds/SFX/21 yp.wav" id="13_ebdne"]
+[ext_resource type="PackedScene" uid="uid://bi1audeuvvcah" path="res://lamps.tscn" id="14_8tq06"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ywlus"]
 shader = ExtResource("2_e1veg")
 shader_parameter/blend_color1 = Color(0.466667, 0, 0.847059, 1)
-shader_parameter/blend_color2 = Color(0.466667, 0, 0.847059, 1)
+shader_parameter/blend_color2 = Color(0.313726, 0, 0.584314, 1)
 shader_parameter/active = false
 shader_parameter/mask_texture = ExtResource("3_n84vp")
 
@@ -78,6 +82,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasModulate:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_8igda"]
 resource_name = "fadein"
@@ -108,22 +124,6 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1), Color(0.792157, 0.290196, 0.517647, 1), Color(0, 0, 0, 1), Color(0.792157, 0.290196, 0.517647, 1), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_1vdqa"]
-resource_name = "start_gameplay"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Background:material:shader_parameter/active")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
 [sub_resource type="Animation" id="Animation_foux5"]
 resource_name = "starting_menu"
 length = 0.1
@@ -152,12 +152,46 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_4ta5u"]
+resource_name = "fade_out"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasModulate:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.01, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.623529, 0, 0.623529, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_75r4p"]
+resource_name = "intro_fade_in"
+length = 0.5
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasModulate:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.01, 0.23, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0.623529, 0, 0.623529, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dgsdr"]
 _data = {
 "Intro": SubResource("Animation_n1oa3"),
 "RESET": SubResource("Animation_25sji"),
+"fade_out": SubResource("Animation_4ta5u"),
 "fadein": SubResource("Animation_8igda"),
-"start_gameplay": SubResource("Animation_1vdqa"),
+"intro_fade_in": SubResource("Animation_75r4p"),
 "starting_menu": SubResource("Animation_foux5")
 }
 
@@ -174,6 +208,30 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Background:material:shader_parameter/blend_color1")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.466667, 0, 0.847059, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Background:material:shader_parameter/blend_color2")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.313726, 0, 0.584314, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_63r5i"]
@@ -192,15 +250,52 @@ tracks/0/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_qsuj0"]
+resource_name = "end_game"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background:material:shader_parameter/blend_color1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.65098, 0, 0.847059, 1), Color(0.466667, 0, 0.847059, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Background:material:shader_parameter/active")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Background:material:shader_parameter/blend_color2")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.313726, 0, 0.584314, 1), Color(0.466667, 0, 0.847059, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_awtk0"]
 _data = {
 "RESET": SubResource("Animation_mrwfk"),
+"end_game": SubResource("Animation_qsuj0"),
 "start_gp": SubResource("Animation_63r5i")
 }
-
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_bq5aj"]
-a = Vector2(-3, 0)
-b = Vector2(148, 0)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_cxq61"]
 a = Vector2(-19, 10)
@@ -208,12 +303,55 @@ a = Vector2(-19, 10)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mp15o"]
 size = Vector2(256, 240)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_er6cq"]
+shader = ExtResource("12_xpd0h")
+shader_parameter/shake_intensity = 0.0
+shader_parameter/shake_speed = 65.0
+
+[sub_resource type="Animation" id="Animation_b6m6r"]
+resource_name = "explotion"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/shake_intensity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.01, 0.006, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_verkp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/shake_intensity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3t3pr"]
+_data = {
+"RESET": SubResource("Animation_verkp"),
+"explotion": SubResource("Animation_b6m6r")
+}
+
 [node name="Main" type="Node2D"]
 position = Vector2(128, 120)
 script = ExtResource("1_3wt3s")
 kirby_scene = ExtResource("2_o802s")
 king_dedede = ExtResource("4_7y1lr")
 egg_ui = ExtResource("4_o7pbd")
+scoreboard = ExtResource("5_x8c8q")
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -247,21 +385,17 @@ stream = ExtResource("8_73q2c")
 autoplay = true
 bus = &"Music"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="BackgroundAnimator" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_dgsdr")
 }
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+[node name="ShaderAnimator" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_awtk0")
 }
 
 [node name="Node2D" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D"]
-position = Vector2(-73, 45)
-shape = SubResource("SegmentShape2D_bq5aj")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Node2D"]
 position = Vector2(-19.26, 24.01)
@@ -273,12 +407,11 @@ collision_mask = 65
 script = ExtResource("9_5p8i8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_mp15o")
 
 [node name="GamePlayTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 4.3
 one_shot = true
 
 [node name="egg_basket" type="GridContainer" parent="."]
@@ -295,5 +428,40 @@ theme_override_constants/v_separation = 0
 columns = 3
 metadata/_edit_use_anchors_ = true
 
+[node name="king_spawn" type="Node2D" parent="."]
+position = Vector2(64, -4)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_er6cq")
+offset_left = -128.0
+offset_top = -120.0
+offset_right = 128.0
+offset_bottom = 121.0
+
+[node name="Explosion" type="AnimationPlayer" parent="ColorRect"]
+libraries = {
+"": SubResource("AnimationLibrary_3t3pr")
+}
+
+[node name="displayTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="endtimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="1up" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_ebdne")
+bus = &"SFX"
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="lamps" parent="." instance=ExtResource("14_8tq06")]
+visible = false
+
 [connection signal="timeout" from="PlayerSpawnTimer" to="." method="_on_timer_timeout"]
+[connection signal="animation_finished" from="BackgroundAnimator" to="." method="_on_background_animator_animation_finished"]
 [connection signal="body_exited" from="Area2D" to="Area2D" method="_on_body_exited"]
+[connection signal="timeout" from="GamePlayTimer" to="." method="_on_game_play_timer_timeout"]
+[connection signal="timeout" from="displayTimer" to="." method="_on_display_timer_timeout"]
+[connection signal="timeout" from="endtimer" to="." method="_on_endtimer_timeout"]

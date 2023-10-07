@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b4xo53umoj178"]
 
-[ext_resource type="Texture2D" uid="uid://f6mpbfgnge8s" path="res://UI_EGG.png" id="1_r8y8x"]
+[ext_resource type="Texture2D" uid="uid://f6mpbfgnge8s" path="res://Sprites/UI_EGG.png" id="1_r8y8x"]
 
 [node name="TextureRect" type="TextureRect"]
 clip_contents = true

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dtbp50apypidf"]
 
-[ext_resource type="Script" path="res://egg.gd" id="1_ixxuh"]
+[ext_resource type="Script" path="res://bomb.gd" id="1_2g552"]
 [ext_resource type="Shader" path="res://outofbounds.gdshader" id="2_7rj3v"]
 [ext_resource type="Texture2D" uid="uid://vlcwa08k88lr" path="res://Sprites/misc1.png" id="3_31wux"]
 
@@ -58,7 +58,7 @@ _data = {
 scale = Vector2(1.00202, 0.99293)
 collision_layer = 64
 physics_material_override = SubResource("PhysicsMaterial_nomqk")
-script = ExtResource("1_ixxuh")
+script = ExtResource("1_2g552")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1.73, 1.685)

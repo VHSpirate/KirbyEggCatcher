@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f6mpbfgnge8s"
-path="res://.godot/imported/UI_EGG.png-d7c82a22159fcf08ec584fa3ecf6e2f0.ctex"
+uid="uid://dc42bdtmuqtf3"
+path="res://.godot/imported/bonus.png-0c8918bea38bae946c4f7bba912da859.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI_EGG.png"
-dest_files=["res://.godot/imported/UI_EGG.png-d7c82a22159fcf08ec584fa3ecf6e2f0.ctex"]
+source_file="res://Sprites/bonus.png"
+dest_files=["res://.godot/imported/bonus.png-0c8918bea38bae946c4f7bba912da859.ctex"]
 
 [params]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b3wpw6bnqw2u6"]
 
-[ext_resource type="Texture2D" uid="uid://81pwrx4s2gey" path="res://misc-2.png" id="1_gtg2l"]
+[ext_resource type="Texture2D" uid="uid://81pwrx4s2gey" path="res://Sprites/misc-2.png" id="1_gtg2l"]
 [ext_resource type="Script" path="res://Node2D.gd" id="2_14cpp"]
 
 [sub_resource type="Animation" id="Animation_63u0x"]
@@ -75,3 +75,5 @@ script = ExtResource("2_14cpp")
 libraries = {
 "": SubResource("AnimationLibrary_6yhad")
 }
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

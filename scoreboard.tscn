@@ -1,0 +1,139 @@
+[gd_scene load_steps=21 format=3 uid="uid://41pxfsuq8is1"]
+
+[ext_resource type="Script" path="res://Scoreboard.gd" id="1_b7gti"]
+[ext_resource type="Shader" path="res://maskshader.gdshader" id="2_5arfq"]
+[ext_resource type="Texture2D" uid="uid://b43vpvcips41u" path="res://scoremask.png" id="3_rfjhj"]
+[ext_resource type="Texture2D" uid="uid://ccgpipbpb2vi6" path="res://Sprites/scorebox.png" id="4_dgt6a"]
+[ext_resource type="Shader" path="res://gold.gdshader" id="5_slsxv"]
+[ext_resource type="Texture2D" uid="uid://81pwrx4s2gey" path="res://Sprites/misc-2.png" id="6_pdh4e"]
+[ext_resource type="Texture2D" uid="uid://dc42bdtmuqtf3" path="res://Sprites/bonus.png" id="7_xvuib"]
+[ext_resource type="Shader" path="res://perfect.gdshader" id="8_edvge"]
+[ext_resource type="Texture2D" uid="uid://ccsv863efxsf7" path="res://Sprites/Perfect.png" id="9_unqiv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ynqk"]
+shader = ExtResource("2_5arfq")
+shader_parameter/blend_color1 = Color(0.556863, 0, 1, 1)
+shader_parameter/blend_color2 = Color(0.360784, 0, 0.862745, 1)
+shader_parameter/active = true
+shader_parameter/mask_texture = ExtResource("3_rfjhj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7hosa"]
+shader = ExtResource("5_slsxv")
+shader_parameter/Enabled = true
+shader_parameter/toggle_duration = 0.05
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_euoto"]
+atlas = ExtResource("6_pdh4e")
+region = Rect2(56, 0, 8, 15)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gtiqp"]
+shader = ExtResource("5_slsxv")
+shader_parameter/Enabled = true
+shader_parameter/toggle_duration = 0.05
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6nwx"]
+atlas = ExtResource("6_pdh4e")
+region = Rect2(68, 0, 8, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x7ioh"]
+shader = ExtResource("5_slsxv")
+shader_parameter/Enabled = true
+shader_parameter/toggle_duration = 0.05
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d28td"]
+atlas = ExtResource("6_pdh4e")
+region = Rect2(72, 0, 4, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kdmyf"]
+shader = ExtResource("8_edvge")
+shader_parameter/progress = 0.0
+
+[sub_resource type="Animation" id="Animation_03d8l"]
+resource_name = "perfect"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("perfect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 8.0]
+}
+
+[sub_resource type="Animation" id="Animation_dvbsa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("perfect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w0k3v"]
+_data = {
+"RESET": SubResource("Animation_dvbsa"),
+"perfect": SubResource("Animation_03d8l")
+}
+
+[node name="Scoreboard" type="CanvasGroup"]
+position = Vector2(0, -24)
+script = ExtResource("1_b7gti")
+
+[node name="ScoreBox" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_1ynqk")
+texture = ExtResource("4_dgt6a")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+z_index = 1
+offset_left = -10.0
+offset_top = -8.0
+offset_right = 10.0
+offset_bottom = 8.0
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="first" type="TextureRect" parent="HBoxContainer"]
+visible = false
+material = SubResource("ShaderMaterial_7hosa")
+layout_mode = 2
+texture = SubResource("AtlasTexture_euoto")
+
+[node name="second" type="TextureRect" parent="HBoxContainer"]
+visible = false
+material = SubResource("ShaderMaterial_gtiqp")
+layout_mode = 2
+texture = SubResource("AtlasTexture_g6nwx")
+
+[node name="third" type="TextureRect" parent="HBoxContainer"]
+visible = false
+material = SubResource("ShaderMaterial_x7ioh")
+layout_mode = 2
+texture = SubResource("AtlasTexture_d28td")
+
+[node name="Message" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -28)
+texture = ExtResource("7_xvuib")
+vframes = 2
+
+[node name="perfect" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_kdmyf")
+position = Vector2(0, -28)
+texture = ExtResource("9_unqiv")
+
+[node name="perfectanimator" type="AnimationPlayer" parent="perfect"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_w0k3v")
+}
