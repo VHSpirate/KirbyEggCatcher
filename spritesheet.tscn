@@ -1,10 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://jr7h42eflmkv"]
-
-[ext_resource type="Texture2D" uid="uid://bw1m5ol146d6b" path="res://Sprites/spritesheet.png" id="1_rbt0p"]
+[gd_scene format=3 uid="uid://batbeg6whv7sr"]
 
 [node name="Spritesheet" type="Sprite2D"]
 texture_filter = 3
 position = Vector2(389, -434)
-texture = ExtResource("1_rbt0p")
 region_enabled = true
 region_rect = Rect2(4, 4, 256, 240)

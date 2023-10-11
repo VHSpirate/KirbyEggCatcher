@@ -17,7 +17,7 @@ func _ready():
 	king_animator.play("Spotlight")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if intro or done_throwing:
 		return
 	check_done()
@@ -94,7 +94,7 @@ func cry():
 	if kk:
 		celebrate()
 		return
-		king_animator.play("cry")
+	king_animator.play("cry")
 
 func killed_kirby():
 	done_throwing = true

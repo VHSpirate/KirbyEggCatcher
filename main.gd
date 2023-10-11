@@ -10,9 +10,9 @@ extends Node2D
 @onready var king_spawn = $king_spawn
 @onready var explosion = $ColorRect/Explosion
 @onready var display_timer = $displayTimer
-var no_bonus = load("res://Sounds/Music/35 No Bonus.mp3")
-var battle_music = load("res://Sounds/Music/19 Expert Bonus Level.mp3")
-var start_music = load("res://Sounds/Music/10 Level Map Select of LEVEL 2 LOOP.mp3")
+var no_bonus = preload("res://Sounds/Music/35 No Bonus.mp3")
+var battle_music = preload("res://Sounds/Music/19 Expert Bonus Level.mp3")
+var start_music = preload("res://Sounds/Music/10 Level Map Select of LEVEL 2 LOOP.mp3")
 var bonus = preload("res://Sounds/Music/36 Bonus.mp3")
 var perfect_bonus = preload("res://Sounds/Music/37 Perfect Bonus.mp3")
 var start_game:bool = false;
@@ -34,7 +34,7 @@ var board
 func _ready():
 	BackgroundAnimator.play("intro_fade_in")
 	
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_released("restart") and start_game:
 		restart()
 	if(not start_game):

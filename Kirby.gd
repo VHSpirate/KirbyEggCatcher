@@ -26,7 +26,7 @@ var game_over: bool = false
 func _ready():
 	kirby_intro_animator.play("falling")
 	
-func _process(delta):
+func _process(_delta):
 	if intro or game_over:
 		return
 	if Input.is_action_pressed("eat") and not eating:

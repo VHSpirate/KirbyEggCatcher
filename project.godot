@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=256
 window/size/viewport_height=240
+window/size/window_width_override=768
+window/size/window_height_override=720
 window/stretch/mode="viewport"
 
 [input]
@@ -46,7 +48,8 @@ eat={
 
 [physics]
 
-2d/default_gravity=625.0
+2d/run_on_separate_thread=true
+2d/default_gravity=640.0
 
 [rendering]
 
