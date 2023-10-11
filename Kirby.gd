@@ -29,13 +29,23 @@ func _ready():
 func _process(_delta):
 	if intro or game_over:
 		return
-	if Input.is_action_pressed("eat") and not eating:
+	if (Input.is_action_pressed("eat") and not eating):
 		eating = true;
 		eat()
-	if Input.is_action_just_released("eat") and eating:
+	if (Input.is_action_just_released("eat") and eating):
 		kirby_intro_animator.play("idle")
 		eating = false;
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+		
+func _input(event):
+	if event is InputEventScreenTouch and not (intro or game_over):
+		if event.is_pressed():
+			eating = true;
+			eat()
+		else:
+			kirby_intro_animator.play("idle")
+			eating = false;
+	
+
 func _physics_process(delta):
 	check_bounce()	
 	

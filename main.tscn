@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://main.gd" id="1_3wt3s"]
 [ext_resource type="Texture2D" uid="uid://b0ssgcrt34lw8" path="res://Sprites/background_sheet.png" id="1_144op"]
 [ext_resource type="Shader" path="res://maskshader.gdshader" id="2_e1veg"]
-[ext_resource type="PackedScene" uid="uid://gyjxe1jjyqqv" path="res://kirby.tscn" id="2_o802s"]
+[ext_resource type="PackedScene" uid="uid://gyjxe1jjyqqv" path="res://Kirby.tscn" id="2_o802s"]
 [ext_resource type="Texture2D" uid="uid://xfg5xpi5otoi" path="res://Sprites/background-mask.png" id="3_n84vp"]
 [ext_resource type="PackedScene" uid="uid://csuhueosqi4rt" path="res://king.tscn" id="4_7y1lr"]
 [ext_resource type="PackedScene" uid="uid://b4xo53umoj178" path="res://egg_ui.tscn" id="4_o7pbd"]

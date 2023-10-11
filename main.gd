@@ -43,7 +43,13 @@ func _process(_delta):
 			background_music.stop()
 			start()
 		
-		
+func _input(event):
+	if event is InputEventScreenTouch and not start_game:
+		if event.is_pressed():
+			sfx_player.play()
+			background_music.stop()
+			start()
+
 
 func start():
 	start_game	= true
